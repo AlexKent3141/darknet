@@ -34,6 +34,24 @@ float matrix_topk_accuracy(matrix truth, matrix guess, int k)
     return (float)correct/truth.rows;
 }
 
+// Calculate the average error between the truth and the guess.
+float matrix_error_accuracy(matrix truth, matrix guess)
+{
+    float total = 0, error, diff;
+    int i,j;
+    int r = truth.rows;
+    int c = truth.cols;
+    for(i = 0; i < r; i++){
+        error = 0.0;
+        for(j = 0; j < c; j++){
+            diff = truth.vals[i][j] - guess.vals[i][j];
+            error += sqrt(diff*diff);
+        }
+        total += error;
+    }
+    return total/r;
+}
+
 void scale_matrix(matrix m, float scale)
 {
     int i,j;

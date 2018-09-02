@@ -685,6 +685,15 @@ float network_accuracy(network *net, data d)
     free_matrix(guess);
     return acc;
 }
+float network_assess(network *net, data d, ACCURACY_TYPE t)
+{
+    matrix guess = network_predict_data(net, d);
+    float acc = t == TOPK
+        ? matrix_topk_accuracy(d.y, guess,1)
+        : matrix_error_accuracy(d.y, guess);
+    free_matrix(guess);
+    return acc;
+}
 
 float *network_accuracies(network *net, data d, int n)
 {
